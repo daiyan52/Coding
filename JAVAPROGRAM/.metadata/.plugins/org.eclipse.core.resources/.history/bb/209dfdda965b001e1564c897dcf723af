@@ -1,0 +1,18 @@
+package TCS.in;
+public class CountFreq {
+	public static void main(String[] args) {
+		 int arr[] = {0,2,1,1,2,2,6,1};
+		 int temp[] = new int[100];
+		 int k=0;
+		 int count=0;
+		 for(int i=1;i<arr.length;i++) {
+			 if(arr[i-1]==arr[i]) {
+				 temp[arr[i-1]-(char)0]++;
+			 }
+		 }
+		 for(int i=0;i<temp.length;i++) {
+			 System.out.print(temp[i]+"  ");
+		 }
+	}
+}
+ 

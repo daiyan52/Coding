@@ -1,0 +1,49 @@
+package TCS.in;
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+public class CountFreq {
+
+	public static void main(String[] args) {
+		int arr[] ={10, 20, 20, 10, 10, 20, 5, 20};
+//		HashMap<Integer, Integer> map = new HashMap<Integer,Integer>();
+		TreeMap<Integer,Integer> map = new TreeMap<Integer,Integer>(java.util.Collections.reverseOrder());
+		for(int i=0;i<arr.length;i++) {
+			if(!map.containsKey(arr[i])) {
+				map.put(arr[i],1);
+			}
+			else {
+				int count = map.get(arr[i]);
+				map.put(arr[i],count+1);
+			}
+		}
+		for(Entry<Integer,Integer> entry : map.entrySet()) {
+			System.out.println(entry.getKey()+"\t"+entry.getValue());
+		}
+	}
+}
+/*
+import java.util.HashMap;
+import java.util.Map.Entry;
+import java.util.TreeMap;
+
+public class CountFreq {
+
+    public static void main(String[] args) {
+        int arr[] = {10, 20, 20, 10, 10, 20, 5, 20};
+        TreeMap<Integer, Integer> map = new TreeMap<>(java.util.Collections.reverseOrder());
+
+        for (int i = 0; i < arr.length; i++) {
+            if (!map.containsKey(arr[i])) {
+                map.put(arr[i], 1);
+            } else {
+                int count = map.get(arr[i]);
+                map.put(arr[i], count + 1);
+            }
+        }
+
+        for (Entry<Integer, Integer> entry : map.entrySet()) {
+            System.out.println(entry.getKey() + "\t" + entry.getValue());
+        }
+    }
+}*/

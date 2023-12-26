@@ -1,0 +1,10 @@
+package java.sql;
+
+public class DriverManager {
+
+	public static Connection getConnection(String dbUrl, String dbUname, String dbPwd) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

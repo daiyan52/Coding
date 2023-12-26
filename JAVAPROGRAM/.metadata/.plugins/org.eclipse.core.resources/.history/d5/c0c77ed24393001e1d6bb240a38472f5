@@ -1,0 +1,64 @@
+package leetcode.in;
+//  /Volumes/NO NAME/Nodejs/NodeJs - coursedl.org.z01
+///Zipcombine
+ 
+
+import org.apache.commons.io.FileUtils;
+import net.lingala.zip4j.ZipFile;
+import net.lingala.zip4j.model.ZipParameters;
+import java.io.File;
+import java.io.IOException;
+
+public class Zipcombine {
+
+    public static void main(String[] args) {
+        String inputFolderPath = "path/to/your/files";  // Specify the folder containing split files
+        String outputZipPath = "path/to/your/output.zip";  // Specify the output zip file path
+
+        combineSplitFilesToZip(inputFolderPath, outputZipPath);
+    }
+
+    public static void combineSplitFilesToZip(String inputFolderPath, String outputZipPath) {
+        try {
+            // Combine split files into a single file
+            File combinedFile = new File(outputZipPath);
+            FileUtils.writeByteArrayToFile(combinedFile, combineSplitFiles(inputFolderPath));
+
+            // Create a zip file from the combined file
+            createZipFile(combinedFile, outputZipPath);
+
+            // Optionally, delete the combined file
+            combinedFile.delete();
+
+            System.out.println("Files combined and zipped successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private static byte[] combineSplitFiles(String inputFolderPath) throws IOException {
+        File inputFolder = new File(inputFolderPath);
+        File[] splitFiles = inputFolder.listFiles((dir, name) -> name.startsWith("z") && name.endsWith(".01"));
+
+        // Sort split files to ensure proper ordering
+        if (splitFiles != null && splitFiles.length > 0) {
+            java.util.Arrays.sort(splitFiles);
+        }
+
+        byte[] combinedBytes = new byte[0];
+        for (File splitFile : splitFiles) {
+            combinedBytes = FileUtils.readFileToByteArray(splitFile);
+        }
+        return combinedBytes;
+    }
+
+    private static void createZipFile(File inputFile, String outputZipPath) {
+        try {
+            ZipFile zipFile = new ZipFile(outputZipPath);
+            ZipParameters parameters = new ZipParameters();
+            zipFile.addFile(inputFile, parameters);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
+}

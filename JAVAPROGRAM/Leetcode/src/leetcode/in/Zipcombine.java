@@ -1,0 +1,47 @@
+package leetcode.in;
+//  /Volumes/NO NAME/Nodejs/NodeJs - coursedl.org.z01
+///Zipcombine
+ 
+import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipOutputStream;
+
+public class Zipcombine {
+
+    public static void main(String[] args) {
+        String baseFileName = "/Volumes/NO NAME/Nodejs/NodeJs - coursedl.org.z01";  // Specify the base file name without extension
+        int numberOfParts = 2;  // Adjust the number of parts as needed
+
+        combineAndZipFiles(baseFileName, numberOfParts);
+    }
+
+    public static void combineAndZipFiles(String baseFileName, int numberOfParts) {
+        try (FileOutputStream fos = new FileOutputStream(baseFileName + ".zip");
+             ZipOutputStream zipOut = new ZipOutputStream(fos)) {
+
+            byte[] buffer = new byte[1024];
+
+            for (int partNumber = 1; partNumber <= numberOfParts; partNumber++) {
+                String partFileName = baseFileName + ".z" + String.format("%02d", partNumber);
+                File partFile = new File(partFileName);
+
+                try (FileInputStream fis = new FileInputStream(partFile)) {
+                    ZipEntry zipEntry = new ZipEntry(partFile.getName());
+                    zipOut.putNextEntry(zipEntry);
+
+                    int length;
+                    while ((length = fis.read(buffer)) > 0) {
+                        zipOut.write(buffer, 0, length);
+                    }
+
+                    zipOut.closeEntry();
+                }
+            }
+
+            System.out.println("Files combined and zipped successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

@@ -1,0 +1,40 @@
+package leetcode.in;
+// /Volumes/NO NAME/Nodejs/NodeJs - coursedl.org.z01
+///Zipcombine
+import java.io.*;
+import java.util.zip.ZipEntry;
+import java.util.zip.ZipInputStream;
+
+public class Zipcombine {
+
+    public static void main(String[] args) {
+        combineAndExtract("path/to/your/file.z01");
+    }
+
+    public static void combineAndExtract(String z01FilePath) {
+        // Extract the base file name without extension
+        String baseFileName = z01FilePath.substring(0, z01FilePath.lastIndexOf(".z01"));
+
+        try (FileOutputStream combinedOutputStream = new FileOutputStream(baseFileName);
+             ZipInputStream zipInputStream = new ZipInputStream(new FileInputStream(z01FilePath))) {
+
+            byte[] buffer = new byte[1024];
+            int bytesRead;
+
+            // Iterate through zip entries
+            ZipEntry zipEntry;
+            while ((zipEntry = zipInputStream.getNextEntry()) != null) {
+                // Read data from the entry and write it to the combined file
+                while ((bytesRead = zipInputStream.read(buffer)) != -1) {
+                    combinedOutputStream.write(buffer, 0, bytesRead);
+                }
+                zipInputStream.closeEntry();
+            }
+
+            System.out.println("Combined and extracted successfully.");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

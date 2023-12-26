@@ -1,0 +1,11 @@
+package TCS.in;
+public class CountFreq {
+	public static void main(String[] args) {
+		 int arr[] = {1,2,1,6,8,4,6,7};
+		 int temp[] = new int[arr.length];
+		 for(int i=0;i<temp.length;i++) {
+			 System.out.println(temp.toString());
+		 }
+	}
+}
+ 

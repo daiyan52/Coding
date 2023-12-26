@@ -1,0 +1,45 @@
+package leetcode.in;
+
+import java.io.*;
+
+public class Zipcombine {
+
+    public static void main(String[] args) {
+        combineSplitFiles("/Volumes/NO NAME/Nodejs/NodeJs - coursedl.org.z01");
+    }
+
+    public static void combineSplitFiles(String filePath) {
+        // Specify the base file name without the ".z01" extension
+        String baseFileName = filePath.substring(0, filePath.lastIndexOf(".z01"));
+
+        try (BufferedOutputStream outputStream = new BufferedOutputStream(new FileOutputStream(baseFileName))) {
+            int partNumber = 1;
+            boolean moreParts = true;
+
+            while (moreParts) {
+                String partFileName = baseFileName + ".z" + String.format("%02d", partNumber);
+                File partFile = new File(partFileName);
+
+                if (partFile.exists()) {
+                    try (BufferedInputStream inputStream = new BufferedInputStream(new FileInputStream(partFile))) {
+                        byte[] buffer = new byte[1024];
+                        int bytesRead;
+
+                        while ((bytesRead = inputStream.read(buffer)) != -1) {
+                            outputStream.write(buffer, 0, bytesRead);
+                        }
+                    }
+
+                    partNumber++;
+                } else {
+                    // No more parts found, exit the loop
+                    moreParts = false;
+                }
+            }
+
+            System.out.println("Files combined successfully.");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+}

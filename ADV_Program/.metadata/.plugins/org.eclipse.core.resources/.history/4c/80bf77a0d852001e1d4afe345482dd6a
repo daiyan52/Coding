@@ -1,0 +1,36 @@
+package daiyan.in;
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.Statement;
+import java.sql.SQLException;
+public class InsertBook {
+	private static final String DB_URL = "jdbc:mysql://localhost:3306/advjdb";
+	private static final String Db_UNAME = "root";
+	private static final String DB_PWD = "Alam@123";
+	private static final String INSERT_SQL = "INSERT INTO BOOKS VALUES(101,'java',1000)";
+	public static void main(String[] args)   {
+
+		// Step-1 : Load Driver
+		
+		Class.forName("com.mysql.cj.jdbc.Driver");
+		
+		// Step-2 Get DB Connection
+		DriverManager.getConnection(DB_URL,Db_UNAME,DB_PWD);
+		Connection con = DriverManager.getConnection(DB_URL, Db_UNAME, DB_PWD);
+		System.out.println(con);
+		
+		// Step-3 : Create Statement
+		Statement stmt = con.createStatement();
+		
+		// Step-4 : Execute query
+		int rowsEffected = stmt.executeUpdate(INSERT_SQL);
+		
+		// Step-5 Process Result
+		System.out.println("Record Inserted Count :: "+rowsEffected);
+		
+		// Step-6 : Close Connection
+		
+		con.close();
+	}
+}
+
